@@ -42,11 +42,17 @@ export type DateTimeFilter = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  adoptPet?: Maybe<Pet>;
+  createPet?: Maybe<Pet>;
   createUser: User;
   /** Login to an existing account */
   login?: Maybe<AuthPayload>;
   /** Signup for an account */
   signup?: Maybe<AuthPayload>;
+};
+
+export type MutationAdoptPetArgs = {
+  pet: PetWhereUniqueInput;
 };
 
 export type MutationCreateUserArgs = {
@@ -106,6 +112,7 @@ export type Pet = {
   __typename?: 'Pet';
   createdAt: Scalars['DateTime'];
   id: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
   updatedAt: Scalars['DateTime'];
   User?: Maybe<User>;
 };
@@ -118,7 +125,7 @@ export type PetCreateManyWithoutUserInput = {
 export type PetCreateWithoutUserInput = {
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
-  name: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
@@ -128,11 +135,19 @@ export type PetListRelationFilter = {
   some?: Maybe<PetWhereInput>;
 };
 
+export type PetOrderByInput = {
+  createdAt?: Maybe<SortOrder>;
+  id?: Maybe<SortOrder>;
+  name?: Maybe<SortOrder>;
+  updatedAt?: Maybe<SortOrder>;
+  userId?: Maybe<SortOrder>;
+};
+
 export type PetWhereInput = {
   AND?: Maybe<Array<PetWhereInput>>;
   createdAt?: Maybe<DateTimeFilter>;
   id?: Maybe<StringFilter>;
-  name?: Maybe<StringFilter>;
+  name?: Maybe<StringNullableFilter>;
   NOT?: Maybe<Array<PetWhereInput>>;
   OR?: Maybe<Array<PetWhereInput>>;
   updatedAt?: Maybe<DateTimeFilter>;
@@ -191,8 +206,18 @@ export type Query = {
   __typename?: 'Query';
   /** Returns the currently logged in user */
   me?: Maybe<User>;
+  pets: Array<Pet>;
   user?: Maybe<User>;
   users: Array<User>;
+};
+
+export type QueryPetsArgs = {
+  after?: Maybe<PetWhereUniqueInput>;
+  before?: Maybe<PetWhereUniqueInput>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<Array<PetOrderByInput>>;
+  where?: Maybe<PetWhereInput>;
 };
 
 export type QueryUserArgs = {
@@ -315,6 +340,28 @@ export type UserWhereUniqueInput = {
   id?: Maybe<Scalars['String']>;
 };
 
+export type GetPetsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetPetsQuery = { __typename?: 'Query' } & {
+  pets: Array<
+    { __typename?: 'Pet' } & Pick<Pet, 'id' | 'name' | 'createdAt' | 'updatedAt'> & {
+        User?: Maybe<{ __typename?: 'User' } & Pick<User, 'id'>>;
+      }
+  >;
+};
+
+export type AdoptPetMutationVariables = Exact<{
+  pet: PetWhereUniqueInput;
+}>;
+
+export type AdoptPetMutation = { __typename?: 'Mutation' } & {
+  adoptPet?: Maybe<
+    { __typename?: 'Pet' } & Pick<Pet, 'id'> & {
+        User?: Maybe<{ __typename?: 'User' } & Pick<User, 'id'>>;
+      }
+  >;
+};
+
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
@@ -342,6 +389,103 @@ export type MeQuery = { __typename?: 'Query' } & {
   me?: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'email'>>;
 };
 
+export const GetPetsDocument = gql`
+  query getPets {
+    pets(orderBy: { createdAt: asc }) {
+      id
+      name
+      createdAt
+      updatedAt
+      User {
+        id
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetPetsQuery__
+ *
+ * To run a query within a React component, call `useGetPetsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPetsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPetsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetPetsQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<GetPetsQuery, GetPetsQueryVariables>
+) {
+  return ApolloReactHooks.useQuery<GetPetsQuery, GetPetsQueryVariables>(
+    GetPetsDocument,
+    baseOptions
+  );
+}
+
+export function useGetPetsLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetPetsQuery, GetPetsQueryVariables>
+) {
+  return ApolloReactHooks.useLazyQuery<GetPetsQuery, GetPetsQueryVariables>(
+    GetPetsDocument,
+    baseOptions
+  );
+}
+
+export type GetPetsQueryHookResult = ReturnType<typeof useGetPetsQuery>;
+export type GetPetsLazyQueryHookResult = ReturnType<typeof useGetPetsLazyQuery>;
+export type GetPetsQueryResult = ApolloReactCommon.QueryResult<GetPetsQuery, GetPetsQueryVariables>;
+export const AdoptPetDocument = gql`
+  mutation adoptPet($pet: PetWhereUniqueInput!) {
+    adoptPet(pet: $pet) {
+      id
+      User {
+        id
+      }
+    }
+  }
+`;
+export type AdoptPetMutationFn = ApolloReactCommon.MutationFunction<
+  AdoptPetMutation,
+  AdoptPetMutationVariables
+>;
+
+/**
+ * __useAdoptPetMutation__
+ *
+ * To run a mutation, you first call `useAdoptPetMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAdoptPetMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [adoptPetMutation, { data, loading, error }] = useAdoptPetMutation({
+ *   variables: {
+ *      pet: // value for 'pet'
+ *   },
+ * });
+ */
+export function useAdoptPetMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<AdoptPetMutation, AdoptPetMutationVariables>
+) {
+  return ApolloReactHooks.useMutation<AdoptPetMutation, AdoptPetMutationVariables>(
+    AdoptPetDocument,
+    baseOptions
+  );
+}
+
+export type AdoptPetMutationHookResult = ReturnType<typeof useAdoptPetMutation>;
+export type AdoptPetMutationResult = ApolloReactCommon.MutationResult<AdoptPetMutation>;
+export type AdoptPetMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  AdoptPetMutation,
+  AdoptPetMutationVariables
+>;
 export const LoginDocument = gql`
   mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {

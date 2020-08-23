@@ -35,6 +35,8 @@ The `JSON` scalar type represents JSON objects as specified by [ECMA-404](http:/
 scalar Json
 
 type Mutation {
+  adoptPet(pet: PetWhereUniqueInput!): Pet
+  createPet: Pet
   createUser(data: UserCreateInput!): User!
 
   """Login to an existing account"""
@@ -87,6 +89,7 @@ input NestedStringNullableFilter {
 type Pet {
   createdAt: DateTime!
   id: String!
+  name: String
   updatedAt: DateTime!
   User: User
 }
@@ -99,7 +102,7 @@ input PetCreateManyWithoutUserInput {
 input PetCreateWithoutUserInput {
   createdAt: DateTime
   id: String
-  name: String!
+  name: String
   updatedAt: DateTime
 }
 
@@ -109,11 +112,19 @@ input PetListRelationFilter {
   some: PetWhereInput
 }
 
+input PetOrderByInput {
+  createdAt: SortOrder
+  id: SortOrder
+  name: SortOrder
+  updatedAt: SortOrder
+  userId: SortOrder
+}
+
 input PetWhereInput {
   AND: [PetWhereInput!]
   createdAt: DateTimeFilter
   id: StringFilter
-  name: StringFilter
+  name: StringNullableFilter
   NOT: [PetWhereInput!]
   OR: [PetWhereInput!]
   updatedAt: DateTimeFilter
@@ -171,6 +182,7 @@ input ProfileWhereUniqueInput {
 type Query {
   """Returns the currently logged in user"""
   me: User
+  pets(after: PetWhereUniqueInput, before: PetWhereUniqueInput, first: Int, last: Int, orderBy: [PetOrderByInput!], where: PetWhereInput): [Pet!]!
   user(where: UserWhereUniqueInput!): User
   users(after: UserWhereUniqueInput, before: UserWhereUniqueInput, first: Int, last: Int, orderBy: [UserOrderByInput!], where: UserWhereInput): [User!]!
 }

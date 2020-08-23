@@ -6,4 +6,5 @@ module.exports = {
   tabWidth: 2,
   singleQuote: true,
   arrowParens: 'always',
-}
+  semicolons: false,
+};

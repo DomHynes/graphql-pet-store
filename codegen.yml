@@ -7,11 +7,12 @@ hooks:
 generates:
   types.ts:
     documents:
-      - 'pages/**/*.{ts,tsx}'
-      - 'components/**/*.{ts,tsx}'
-      - 'layouts/**/*.{ts,tsx}'
-      - 'context/**/*.{ts,tsx}'
-      - '!pages/api*'
+      - "pages/**/*.{ts,tsx}"
+      - "components/**/*.{ts,tsx}"
+      - "layouts/**/*.{ts,tsx}"
+      - "cells/**/*.{ts,tsx}"
+      - "context/**/*.{ts,tsx}"
+      - "!pages/api*"
     plugins:
       - typescript
       - typescript-operations
