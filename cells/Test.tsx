@@ -12,7 +12,9 @@ import {
   Grid,
   Alert,
   AlertIcon,
+  Link,
 } from '@chakra-ui/core';
+import NextLink from 'next/link';
 
 import { GetPetsQuery, Pet, useGetPetsQuery, useAdoptPetMutation } from '../types';
 import { useAuth } from '../context/auth';
@@ -49,29 +51,34 @@ const PetCard = ({ pet }: { pet: GetPetsQuery['pets'][0] }) => {
   const [adopt, { called, loading, error }] = useAdoptPetMutation();
 
   return (
-    <Stack spacing={2} border="1px" borderRadius="md" borderColor="gray.200">
-      <AspectRatio width={400} ratio={16 / 9} bgColor="gray.500">
-        <Box></Box>
-      </AspectRatio>
-      <Flex justifyContent="space-between">
-        <Heading size="xl">{pet.name ?? 'Unnamed'}</Heading>
-        {user && (
-          <Button
-            isDisabled={user.id == pet.User?.id}
-            onClick={() => adopt({ variables: { pet: { id: pet.id } } })}
-          >
-            adopt
-          </Button>
-        )}
-      </Flex>
+    <NextLink href={`/[:petId]`} as={`/${pet.id}`} passHref>
+      <Link href="#" color="gray.900">
+        <Stack spacing={2} border="1px" borderRadius="md" borderColor="gray.200">
+          <AspectRatio width={400} ratio={16 / 9} bgColor="gray.500">
+            <Box></Box>
+          </AspectRatio>
+          <Flex justifyContent="space-between" p={2}>
+            <Heading size="xl">{pet.name ?? 'Unnamed'}</Heading>
 
-      {called && !loading && !error && (
-        <Alert status="success">
-          <AlertIcon />
-          Pet Adopted
-        </Alert>
-      )}
-    </Stack>
+            {user && (
+              <Button
+                isDisabled={user.id == pet.User?.id}
+                onClick={() => adopt({ variables: { pet: { id: pet.id } } })}
+              >
+                adopt
+              </Button>
+            )}
+          </Flex>
+
+          {called && !loading && !error && (
+            <Alert status="success">
+              <AlertIcon />
+              Pet Adopted
+            </Alert>
+          )}
+        </Stack>
+      </Link>
+    </NextLink>
   );
 };
 

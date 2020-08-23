@@ -9,7 +9,7 @@
     "db:migrate": "yarn -s prisma migrate up --experimental",
     "db:setup": "yarn db:migrate && yarn prisma generate",
     "dev": "concurrently -n \"WATCHERS,NEXT\" -c \"black.bgYellow.dim,black.bgCyan.dim\" \"yarn watch:all\" \"next dev\"",
-    "g:cell": "hygen cell new --name",
+    "g:cell": "hygen cells new --name",
     "g:component": "hygen component new --name",
     "g:graphql": "hygen graphql new --name",
     "g:page": "hygen page new --name",
