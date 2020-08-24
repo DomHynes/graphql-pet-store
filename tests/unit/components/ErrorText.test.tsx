@@ -1,14 +1,14 @@
-import React from 'react';
+import React from 'react'
 
-import { render } from '../../../tests/utils';
-import { ErrorText } from '../../../components/ErrorText';
+import { render } from '../../../tests/utils'
+import { ErrorText } from '../../../components/ErrorText'
 
 describe('ErrorText', () => {
   it('loads', async () => {
-    const { findByText } = render(<ErrorText>Ma Error</ErrorText>);
+    const { findByText } = render(<ErrorText>Ma Error</ErrorText>)
 
-    const component = await findByText('Ma Error');
+    const component = await findByText('Ma Error')
 
-    expect(component).toBeVisible();
-  });
-});
+    expect(component).toBeVisible()
+  })
+})

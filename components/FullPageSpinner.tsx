@@ -1,5 +1,5 @@
-import React from 'react';
-import { Spinner, Center } from '@chakra-ui/core';
+import React from 'react'
+import { Spinner, Center } from '@chakra-ui/core'
 
 /** Renders a full page loading spinner */
 export function FullPageSpinner() {
@@ -7,5 +7,5 @@ export function FullPageSpinner() {
     <Center height="100vh" width="100vw">
       <Spinner />
     </Center>
-  );
+  )
 }

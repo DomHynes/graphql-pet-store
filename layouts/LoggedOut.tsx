@@ -1,8 +1,8 @@
-import React from 'react';
-import { Box, Center, Flex, Text, Button } from '@chakra-ui/core';
-import NextLink from 'next/link';
+import React from 'react'
+import { Box, Center, Flex, Text, Button } from '@chakra-ui/core'
+import NextLink from 'next/link'
 
-import { Logo } from '../components/Logo';
+import { Logo } from '../components/Logo'
 
 export function LoggedOutLayout({ children }) {
   return (
@@ -36,5 +36,5 @@ export function LoggedOutLayout({ children }) {
         </Flex>
       </Center>
     </Flex>
-  );
+  )
 }

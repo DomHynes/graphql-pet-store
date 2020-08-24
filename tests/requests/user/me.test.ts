@@ -1,8 +1,8 @@
-import { graphQLRequest, graphQLRequestAsUser, resetDB, disconnect } from '../../helpers';
-import { UserFactory } from '../../factories/user';
+import { graphQLRequest, graphQLRequestAsUser, resetDB, disconnect } from '../../helpers'
+import { UserFactory } from '../../factories/user'
 
-beforeEach(async () => resetDB());
-afterAll(async () => disconnect());
+beforeEach(async () => resetDB())
+afterAll(async () => disconnect())
 
 describe('me query', () => {
   describe('not logged in', () => {
@@ -13,9 +13,9 @@ describe('me query', () => {
             id
           }
         }
-      `;
+      `
 
-      const response = await graphQLRequest({ query });
+      const response = await graphQLRequest({ query })
 
       expect(response.body).toMatchInlineSnapshot(`
               Object {
@@ -23,9 +23,9 @@ describe('me query', () => {
                   "me": null,
                 },
               }
-          `);
-    });
-  });
+          `)
+    })
+  })
 
   describe('logged in', () => {
     it('returns user data', async () => {
@@ -36,13 +36,13 @@ describe('me query', () => {
             roles
           }
         }
-      `;
+      `
 
       const user = await UserFactory.create({
         email: 'foo@wee.net',
-      });
+      })
 
-      const response = await graphQLRequestAsUser(user, { query });
+      const response = await graphQLRequestAsUser(user, { query })
 
       expect(response.body).toMatchInlineSnapshot(`
           Object {
@@ -55,7 +55,7 @@ describe('me query', () => {
               },
             },
           }
-      `);
-    });
-  });
-});
+      `)
+    })
+  })
+})

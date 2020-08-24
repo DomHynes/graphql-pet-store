@@ -1,8 +1,8 @@
-import { graphQLRequest, resetDB, disconnect } from '../../helpers';
-import { UserFactory } from '../../factories/user';
+import { graphQLRequest, resetDB, disconnect } from '../../helpers'
+import { UserFactory } from '../../factories/user'
 
-beforeEach(async () => resetDB());
-afterAll(async () => disconnect());
+beforeEach(async () => resetDB())
+afterAll(async () => disconnect())
 
 describe('login mutation', () => {
   const query = `
@@ -13,51 +13,51 @@ describe('login mutation', () => {
         }
       }
     }
-  `;
+  `
 
   describe('invalid email', () => {
     it('returns an Authentication error', async () => {
-      await UserFactory.create({ email: 'foo@wee.net' });
+      await UserFactory.create({ email: 'foo@wee.net' })
 
-      const variables = { email: 'fake', password: 'fake' };
-      const response = await graphQLRequest({ query, variables });
-      const errorMessages = response.body.errors.map((e) => e.message);
+      const variables = { email: 'fake', password: 'fake' }
+      const response = await graphQLRequest({ query, variables })
+      const errorMessages = response.body.errors.map((e) => e.message)
 
       expect(errorMessages).toMatchInlineSnapshot(`
         Array [
           "No user found for email: fake",
         ]
-      `);
-    });
-  });
+      `)
+    })
+  })
 
   describe('invalid password', () => {
     it('returns an Authentication error', async () => {
-      const user = await UserFactory.create({ email: 'foo@wee.net' });
+      const user = await UserFactory.create({ email: 'foo@wee.net' })
 
-      const variables = { email: user.email, password: 'fake' };
-      const response = await graphQLRequest({ query, variables });
-      const errorMessages = response.body.errors.map((e) => e.message);
+      const variables = { email: user.email, password: 'fake' }
+      const response = await graphQLRequest({ query, variables })
+      const errorMessages = response.body.errors.map((e) => e.message)
 
       expect(errorMessages).toMatchInlineSnapshot(`
         Array [
           "Invalid password",
         ]
-      `);
-    });
-  });
+      `)
+    })
+  })
 
   describe('valid password', () => {
     it('returns the auth payload', async () => {
-      const password = 'asdf';
+      const password = 'asdf'
 
       const user = await UserFactory.create({
         email: 'test@wee.net',
         password,
-      });
+      })
 
-      const variables = { email: user.email, password };
-      const response = await graphQLRequest({ query, variables });
+      const variables = { email: user.email, password }
+      const response = await graphQLRequest({ query, variables })
 
       expect(response.body).toMatchInlineSnapshot(`
         Object {
@@ -69,7 +69,7 @@ describe('login mutation', () => {
             },
           },
         }
-      `);
-    });
-  });
-});
+      `)
+    })
+  })
+})

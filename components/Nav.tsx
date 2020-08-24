@@ -1,10 +1,11 @@
-import React from 'react';
-import { Link, Stack, useBreakpoint, MenuButton, Menu, MenuList, MenuItem } from '@chakra-ui/core';
-import NextLink from 'next/link';
+import React from 'react'
+import { Stack, useBreakpoint, MenuButton, Menu, MenuList, MenuItem } from '@chakra-ui/core'
+
+import Link from './Link'
 
 export function Nav() {
-  const breakpoint = useBreakpoint();
-  const isMobile = breakpoint === 'base';
+  const breakpoint = useBreakpoint()
+  const isMobile = breakpoint === 'base'
 
   return isMobile ? (
     <Menu>
@@ -13,38 +14,20 @@ export function Nav() {
       </MenuButton>
 
       <MenuList width="full">
-        <MenuItem>
-          <NextLink href="/">
-            <Link href="">Link 1</Link>
-          </NextLink>
+        <MenuItem flexDirection="column">
+          <Link next={{ href: '/profile' }}>Profile</Link>
         </MenuItem>
 
-        <MenuItem>
-          <Link href="/">Link 2</Link>
-        </MenuItem>
-
-        <MenuItem>
-          <Link href="/">Link 3</Link>
-        </MenuItem>
-
-        <MenuItem>
-          <Link href="https://github.com/echobind" isExternal>
-            External
-          </Link>
+        <MenuItem flexDirection="column">
+          <Link next={{ href: '/pets' }}>Pets</Link>
         </MenuItem>
       </MenuList>
     </Menu>
   ) : (
     <Stack as="nav" direction="row" ml="auto" alignItems="center" fontSize="md" spacing={8}>
-      <NextLink href="/">
-        <Link href="">Link 1</Link>
-      </NextLink>
-
-      <Link href="/#features">Link 2</Link>
-      <Link href="/#tech">Link 3</Link>
-      <Link href="https://github.com/echobind/" isExternal>
-        External
+      <Link next={{ href: '/profile' }} variant="outline">
+        Profile
       </Link>
     </Stack>
-  );
+  )
 }

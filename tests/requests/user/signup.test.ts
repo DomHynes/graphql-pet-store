@@ -1,10 +1,10 @@
-import { Role } from '@prisma/client';
+import { Role } from '@prisma/client'
 
-import { graphQLRequest, resetDB, disconnect } from '../../helpers';
-import { UserFactory } from '../../factories/user';
+import { graphQLRequest, resetDB, disconnect } from '../../helpers'
+import { UserFactory } from '../../factories/user'
 
-beforeEach(async () => resetDB());
-afterAll(async () => disconnect());
+beforeEach(async () => resetDB())
+afterAll(async () => disconnect())
 
 describe('User signup mutation', () => {
   describe('existing email', () => {
@@ -18,21 +18,21 @@ describe('User signup mutation', () => {
             }
           }
         }
-      `;
+      `
 
-      const user = await UserFactory.create({ email: 'foo@wee.net' });
+      const user = await UserFactory.create({ email: 'foo@wee.net' })
 
-      const variables = { data: { email: user.email, password: 'fake' } };
-      const response = await graphQLRequest({ query, variables });
-      const errorMessages = response.body.errors.map((e) => e.message);
+      const variables = { data: { email: user.email, password: 'fake' } }
+      const response = await graphQLRequest({ query, variables })
+      const errorMessages = response.body.errors.map((e) => e.message)
 
       expect(errorMessages).toMatchInlineSnapshot(`
         Array [
           "Email already exists.",
         ]
-      `);
-    });
-  });
+      `)
+    })
+  })
 
   describe('trying to pass role', () => {
     it('throws an error', async () => {
@@ -45,22 +45,22 @@ describe('User signup mutation', () => {
             }
           }
         }
-      `;
+      `
 
       const variables = {
         data: { email: 'hello@wee.net', password: 'fake', roles: { set: [Role.ADMIN] } },
-      };
+      }
 
-      const response = await graphQLRequest({ query, variables });
-      const errors = response.body.errors.map((e) => e.message);
+      const response = await graphQLRequest({ query, variables })
+      const errors = response.body.errors.map((e) => e.message)
 
       expect(errors).toMatchInlineSnapshot(`
         Array [
           "Variable \\"$data\\" got invalid value { email: \\"hello@wee.net\\", password: \\"fake\\", roles: { set: [Array] } }; Field \\"roles\\" is not defined by type SignupInput.",
         ]
-      `);
-    });
-  });
+      `)
+    })
+  })
 
   describe('valid signup', () => {
     it('creates the user', async () => {
@@ -73,16 +73,16 @@ describe('User signup mutation', () => {
             }
           }
         }
-      `;
+      `
 
       // eslint-disable-next-line
       const { id, roles, ...attrs } = UserFactory.build();
-      const variables = { data: { ...attrs } };
-      const response = await graphQLRequest({ query, variables });
-      const { token, user } = response.body.data.signup;
+      const variables = { data: { ...attrs } }
+      const response = await graphQLRequest({ query, variables })
+      const { token, user } = response.body.data.signup
 
-      expect(token).not.toBeNull();
-      expect(user.id).not.toBeNull();
-    });
-  });
-});
+      expect(token).not.toBeNull()
+      expect(user.id).not.toBeNull()
+    })
+  })
+})

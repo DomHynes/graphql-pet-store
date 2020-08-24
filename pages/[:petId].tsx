@@ -1,12 +1,14 @@
-import React from 'react';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { Heading, Center, Flex } from '@chakra-ui/core';
-import { PetDetailCell } from '../cells/PetDetail';
+import React from 'react'
+import Head from 'next/head'
+import { useRouter } from 'next/router'
+import { Heading, Center, Flex } from '@chakra-ui/core'
+
+import { PetDetailCell } from '../cells/PetDetail'
 
 function PetPage() {
-  const r = useRouter();
-  const petId = r.query[':petId'] as string;
+  const { query } = useRouter()
+  const petId = query[':petId'] as string
+
   return (
     <>
       <Head>
@@ -17,7 +19,7 @@ function PetPage() {
         <Center>{petId && <PetDetailCell pet={petId} />}</Center>
       </Flex>
     </>
-  );
+  )
 }
 
-export default PetPage;
+export default PetPage

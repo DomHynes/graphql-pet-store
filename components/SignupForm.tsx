@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import NextLink from 'next/link';
+import React, { useState } from 'react'
+import NextLink from 'next/link'
 import {
   Link,
   Flex,
@@ -10,17 +10,17 @@ import {
   Stack,
   Button,
   Circle,
-} from '@chakra-ui/core';
-import { gql } from '@apollo/client';
-import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
+} from '@chakra-ui/core'
+import { gql } from '@apollo/client'
+import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/router'
 
-import { useAuth } from '../context/auth';
-import { setErrorsFromGraphQLErrors } from '../utils/setErrors';
-import { useSignupMutation } from '../types';
-import { EMAIL_REGEX } from '../constants';
+import { useAuth } from '../context/auth'
+import { setErrorsFromGraphQLErrors } from '../utils/setErrors'
+import { useSignupMutation } from '../types'
+import { EMAIL_REGEX } from '../constants'
 
-import { ErrorText } from './ErrorText';
+import { ErrorText } from './ErrorText'
 
 export const SIGNUP_MUTATION = gql`
   mutation signup($data: SignupInput!) {
@@ -31,15 +31,15 @@ export const SIGNUP_MUTATION = gql`
       }
     }
   }
-`;
+`
 
 /** Form to sign up */
 export function SignupForm() {
-  const { register, handleSubmit, errors, setError } = useForm();
-  const [isLoading, setIsLoading] = useState(false);
-  const [signup] = useSignupMutation();
-  const { login } = useAuth();
-  const router = useRouter();
+  const { register, handleSubmit, errors, setError } = useForm()
+  const [isLoading, setIsLoading] = useState(false)
+  const [signup] = useSignupMutation()
+  const { login } = useAuth()
+  const router = useRouter()
 
   /**
    * Submits the login form
@@ -47,18 +47,18 @@ export function SignupForm() {
    */
   async function handleSignup(formData) {
     try {
-      setIsLoading(true);
-      const { email, password, ...profile } = formData;
-      const variables = { data: { email, password, profile: { create: profile } } };
-      const { data } = await signup({ variables });
+      setIsLoading(true)
+      const { email, password, ...profile } = formData
+      const variables = { data: { email, password, profile: { create: profile } } }
+      const { data } = await signup({ variables })
 
-      await login(data.signup.token);
+      await login(data.signup.token)
 
-      router.replace('/');
+      router.replace('/')
     } catch (e) {
-      setErrorsFromGraphQLErrors(setError, e.graphQLErrors);
+      setErrorsFromGraphQLErrors(setError, e.graphQLErrors)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
   }
 
@@ -139,5 +139,5 @@ export function SignupForm() {
         </Text>
       </Flex>
     </form>
-  );
+  )
 }

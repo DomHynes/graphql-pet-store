@@ -1,6 +1,4 @@
-import { User } from '@prisma/client';
-import { schema } from 'nexus';
-import { AuthenticationError, UserInputError /*ForbiddenError*/ } from 'apollo-server-errors';
+import { schema } from 'nexus'
 
 // import { isAdmin } from '../services/permissions';
 
@@ -9,13 +7,13 @@ schema.objectType({
   name: 'Pet',
   description: 'A Pet',
   definition(t) {
-    t.model.id();
-    t.model.createdAt();
-    t.model.updatedAt();
-    t.model.name();
-    t.model.User();
+    t.model.id()
+    t.model.createdAt()
+    t.model.updatedAt()
+    t.model.name()
+    t.model.user()
   },
-});
+})
 
 schema.extendType({
   type: 'Mutation',
@@ -23,9 +21,9 @@ schema.extendType({
     t.field('createPet', {
       type: 'Pet',
       resolve: (_root, args, ctx) => {
-        return ctx.db.pet.create({ data: {} });
+        return ctx.db.pet.create({ data: {} })
       },
-    });
+    })
 
     t.field('adoptPet', {
       type: 'Pet',
@@ -33,12 +31,12 @@ schema.extendType({
       resolve: async (_root, args, ctx) =>
         ctx.db.pet.update({
           where: args.pet,
-          include: { User: true },
-          data: { User: { connect: { id: ctx.user.id } } },
+          include: { user: true },
+          data: { user: { connect: { id: ctx.user.id } } },
         }),
-    });
+    })
   },
-});
+})
 
 schema.extendType({
   type: 'Query',
@@ -46,6 +44,7 @@ schema.extendType({
     t.crud.pets({
       filtering: true,
       ordering: true,
-    });
+      pagination: true,
+    })
   },
-});
+})

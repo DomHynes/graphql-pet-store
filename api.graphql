@@ -91,7 +91,7 @@ type Pet {
   id: String!
   name: String
   updatedAt: DateTime!
-  User: User
+  user: User
 }
 
 input PetCreateManyWithoutUserInput {
@@ -128,7 +128,7 @@ input PetWhereInput {
   NOT: [PetWhereInput!]
   OR: [PetWhereInput!]
   updatedAt: DateTimeFilter
-  User: UserWhereInput
+  user: UserWhereInput
   userId: StringNullableFilter
 }
 
@@ -183,7 +183,6 @@ type Query {
   """Returns the currently logged in user"""
   me: User
   pets(after: PetWhereUniqueInput, before: PetWhereUniqueInput, first: Int, last: Int, orderBy: [PetOrderByInput!], where: PetWhereInput): [Pet!]!
-  user(where: UserWhereUniqueInput!): User
   users(after: UserWhereUniqueInput, before: UserWhereUniqueInput, first: Int, last: Int, orderBy: [UserOrderByInput!], where: UserWhereInput): [User!]!
 }
 

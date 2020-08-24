@@ -1,6 +1,6 @@
-import React from 'react';
-import { Heading } from '@chakra-ui/core';
-import NextLink from 'next/link';
+import React from 'react'
+import { Heading } from '@chakra-ui/core'
+import NextLink from 'next/link'
 
 export function Logo() {
   return (
@@ -9,5 +9,5 @@ export function Logo() {
         MyApp
       </Heading>
     </NextLink>
-  );
+  )
 }

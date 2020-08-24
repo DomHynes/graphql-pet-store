@@ -1,5 +1,5 @@
-import React from 'react';
-import { Text, TextProps } from '@chakra-ui/core';
+import React from 'react'
+import { Text, TextProps } from '@chakra-ui/core'
 
 /** Renders error text under form inputs */
 export function ErrorText({ children, ...textProps }: TextProps) {
@@ -7,5 +7,5 @@ export function ErrorText({ children, ...textProps }: TextProps) {
     <Text color="red.500" fontSize="sm" textAlign="right" mt={1} {...textProps}>
       {children}
     </Text>
-  );
+  )
 }

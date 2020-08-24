@@ -1,12 +1,12 @@
-import React from 'react';
-import { ChakraProvider, CSSReset } from '@chakra-ui/core';
-import { ApolloProvider } from '@apollo/client';
+import React from 'react'
+import { ChakraProvider, CSSReset } from '@chakra-ui/core'
+import { ApolloProvider } from '@apollo/client'
 
-import { AuthProvider } from '../context/auth';
-import { createApolloClient } from '../lib/apolloClient';
-import defaultTheme from '../chakra';
+import { AuthProvider } from '../context/auth'
+import { createApolloClient } from '../lib/apolloClient'
+import defaultTheme from '../chakra'
 
-const defaultApolloClient = createApolloClient();
+const defaultApolloClient = createApolloClient()
 
 /**
  * Renders all context providers
@@ -26,5 +26,5 @@ export function AllProviders({
         </AuthProvider>
       </ChakraProvider>
     </ApolloProvider>
-  );
+  )
 }

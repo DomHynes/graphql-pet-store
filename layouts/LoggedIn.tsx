@@ -1,19 +1,20 @@
-import React from 'react';
-import { useRouter } from 'next/router';
-import { Box, Center, Flex, Text, Button } from '@chakra-ui/core';
+import React from 'react'
+import { Button, Center, Container, Flex, Text } from '@chakra-ui/core'
+import { useRouter } from 'next/router'
 
-import { Logo } from '../components/Logo';
-import { Nav } from '../components/Nav';
-import { useAuth } from '../context/auth';
+import Link from '../components/Link'
+import { Logo } from '../components/Logo'
+import { Nav } from '../components/Nav'
+import { useAuth } from '../context/auth'
 
 export function LoggedInLayout({ children }) {
-  const { logout } = useAuth();
-  const router = useRouter();
+  const { logout } = useAuth()
+  const router = useRouter()
 
   async function handleLogout() {
-    logout();
+    logout()
 
-    await router.replace('/login');
+    await router.replace('/login')
   }
 
   return (
@@ -35,9 +36,9 @@ export function LoggedInLayout({ children }) {
         </Flex>
       </>
 
-      <Box flex="1 1 auto" mt={8}>
+      <Container flex="1 1 auto" mt={8}>
         {children}
-      </Box>
+      </Container>
 
       <Center as="footer" mt="auto" py={4}>
         <Flex flexDirection="column" alignItems="center">
@@ -52,5 +53,5 @@ export function LoggedInLayout({ children }) {
         </Flex>
       </Center>
     </Flex>
-  );
+  )
 }

@@ -1,8 +1,8 @@
-import React from 'react';
-import Head from 'next/head';
+import React from 'react'
+import Head from 'next/head'
 
-import { CenteredBoxForm } from '../components/CenteredBoxForm';
-import { SignupForm } from '../components/SignupForm';
+import { CenteredBoxForm } from '../components/CenteredBoxForm'
+import { SignupForm } from '../components/SignupForm'
 
 function SignupPage() {
   return (
@@ -15,7 +15,7 @@ function SignupPage() {
         <SignupForm />
       </CenteredBoxForm>
     </>
-  );
+  )
 }
 
-export default SignupPage;
+export default SignupPage

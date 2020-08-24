@@ -1,17 +1,17 @@
-import '@testing-library/jest-dom';
-import React from 'react';
-import { render as defaultRender } from '@testing-library/react';
+import '@testing-library/jest-dom'
+import React from 'react'
+import { render as defaultRender } from '@testing-library/react'
 // import { MockedProvider, MockedResponse } from '@apollo/react-testing';
-import { RouterContext } from 'next/dist/next-server/lib/router-context';
-import { NextRouter } from 'next/router';
-import '@testing-library/jest-dom/extend-expect';
+import { RouterContext } from 'next/dist/next-server/lib/router-context'
+import { NextRouter } from 'next/router'
+import '@testing-library/jest-dom/extend-expect'
 
-import { AllProviders } from '../components/AllProviders';
+import { AllProviders } from '../components/AllProviders'
 // import { ME_QUERY } from '../context/auth';
 // import { User } from '../types';
 
-export * from '@testing-library/react';
-export { default as userEvent } from '@testing-library/user-event';
+export * from '@testing-library/react'
+export { default as userEvent } from '@testing-library/user-event'
 
 /**
  * Overloads RTL's render function with our own. Adds a customizable mock for next/router.
@@ -23,10 +23,10 @@ export function render(ui: RenderUI, { router = {}, ...options }: RenderOptions 
         <RouterContext.Provider value={{ ...mockRouter, ...router }}>
           <AllProviders>{children}</AllProviders>
         </RouterContext.Provider>
-      );
+      )
     },
     ...options,
-  });
+  })
 }
 
 // const createUserMock = (user?: Partial<User>) => {
@@ -88,8 +88,8 @@ const mockRouter: NextRouter = {
     emit: jest.fn(),
   },
   isFallback: false,
-};
+}
 
-type DefaultParams = Parameters<typeof defaultRender>;
-type RenderUI = DefaultParams[0];
-type RenderOptions = DefaultParams[1] & { router?: Partial<NextRouter> };
+type DefaultParams = Parameters<typeof defaultRender>
+type RenderUI = DefaultParams[0]
+type RenderOptions = DefaultParams[1] & { router?: Partial<NextRouter> }

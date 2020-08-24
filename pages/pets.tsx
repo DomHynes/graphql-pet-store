@@ -1,10 +1,10 @@
-import React from 'react';
-import Head from 'next/head';
-import { Heading, Center, Flex, Box, Container, Stack } from '@chakra-ui/core';
+import { Center, Container, Flex, Heading, Stack } from '@chakra-ui/core'
+import Head from 'next/head'
+import React from 'react'
 
-import { TestCell } from '../cells/Test';
+import { TestCell } from '../cells/Test'
 
-function TestPage() {
+function PetsPage() {
   return (
     <>
       <Head>
@@ -22,7 +22,7 @@ function TestPage() {
         </Container>
       </Flex>
     </>
-  );
+  )
 }
 
-export default TestPage;
+export default PetsPage

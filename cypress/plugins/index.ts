@@ -1,7 +1,7 @@
-import path from 'path';
+import path from 'path'
 
-import { resetDB, disconnect, setupDB } from '../../tests/helpers';
-import * as Factories from '../../tests/factories';
+import { resetDB, disconnect, setupDB } from '../../tests/helpers'
+import * as Factories from '../../tests/factories'
 
 /// <reference types="cypress" />
 // ***********************************************************
@@ -18,16 +18,16 @@ import * as Factories from '../../tests/factories';
 // the project's config changing)
 
 if (process.env.CYPRESS_LOCAL) {
-  console.log('--- WARNING --- RUNNING CYPRESS IN LOCAL MODE... database will not be cleaned');
+  console.log('--- WARNING --- RUNNING CYPRESS IN LOCAL MODE... database will not be cleaned')
 
   // if DATABASE_URL isn't already defined, source local .env.test
   if (!process.env.DATABASE_URL) {
-    const envPath = path.resolve(process.cwd(), '.env.local');
-    require('dotenv').config({ path: envPath });
+    const envPath = path.resolve(process.cwd(), '.env.local')
+    require('dotenv').config({ path: envPath })
   }
 } else if (!process.env.DATABASE_URL) {
-  const envPath = path.resolve(process.cwd(), '.env.test');
-  require('dotenv').config({ path: envPath });
+  const envPath = path.resolve(process.cwd(), '.env.test')
+  require('dotenv').config({ path: envPath })
 }
 
 /**
@@ -38,21 +38,21 @@ export default (on, _config) => {
   // `config` is the resolved Cypress config
   on('task', {
     resetDB: () => {
-      if (process.env.CYPRESS_LOCAL) return false;
+      if (process.env.CYPRESS_LOCAL) return false
 
-      return resetDB();
+      return resetDB()
     },
     setupDB: () => {
-      console.log('DB', process.env.DATABASE_URL);
+      console.log('DB', process.env.DATABASE_URL)
 
-      return setupDB();
+      return setupDB()
     },
     disconnectDB: () => {
-      return disconnect();
+      return disconnect()
     },
     factory: ({ name, attrs }) => {
-      const Factory = Factories[`${name}Factory`];
-      return Factory.create(attrs);
+      const Factory = Factories[`${name}Factory`]
+      return Factory.create(attrs)
     },
-  });
-};
+  })
+}

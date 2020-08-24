@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { useRouter } from 'next/router';
-import NextLink from 'next/link';
+import React, { useState } from 'react'
+import { useRouter } from 'next/router'
+import NextLink from 'next/link'
 import {
   Link,
   Flex,
@@ -11,15 +11,15 @@ import {
   Stack,
   Button,
   Circle,
-} from '@chakra-ui/core';
-import { useForm } from 'react-hook-form';
-import { gql } from '@apollo/client';
+} from '@chakra-ui/core'
+import { useForm } from 'react-hook-form'
+import { gql } from '@apollo/client'
 
-import { EMAIL_REGEX } from '../constants';
-import { useAuth } from '../context/auth';
-import { ErrorText } from '../components/ErrorText';
-import { setErrorsFromGraphQLErrors } from '../utils/setErrors';
-import { useLoginMutation } from '../types';
+import { EMAIL_REGEX } from '../constants'
+import { useAuth } from '../context/auth'
+import { ErrorText } from '../components/ErrorText'
+import { setErrorsFromGraphQLErrors } from '../utils/setErrors'
+import { useLoginMutation } from '../types'
 
 export const LOGIN_MUTATION = gql`
   mutation login($email: String!, $password: String!) {
@@ -27,15 +27,15 @@ export const LOGIN_MUTATION = gql`
       token
     }
   }
-`;
+`
 
 /** Form to Login */
 export function LoginForm() {
-  const { register, handleSubmit, errors, setError } = useForm();
-  const [isLoading, setIsLoading] = useState(false);
-  const [login] = useLoginMutation();
-  const { login: loginUser } = useAuth();
-  const router = useRouter();
+  const { register, handleSubmit, errors, setError } = useForm()
+  const [isLoading, setIsLoading] = useState(false)
+  const [login] = useLoginMutation()
+  const { login: loginUser } = useAuth()
+  const router = useRouter()
 
   /**
    * Submits the login form
@@ -43,13 +43,13 @@ export function LoginForm() {
    */
   async function handleLogin(formData) {
     try {
-      setIsLoading(true);
-      const { data } = await login({ variables: formData });
-      await loginUser(data.login.token);
-      await router.replace('/');
+      setIsLoading(true)
+      const { data } = await login({ variables: formData })
+      await loginUser(data.login.token)
+      await router.replace('/')
     } catch (e) {
-      setErrorsFromGraphQLErrors(setError, e.graphQLErrors);
-      setIsLoading(false);
+      setErrorsFromGraphQLErrors(setError, e.graphQLErrors)
+      setIsLoading(false)
     }
   }
 
@@ -120,5 +120,5 @@ export function LoginForm() {
         </Text>
       </Flex>
     </form>
-  );
+  )
 }

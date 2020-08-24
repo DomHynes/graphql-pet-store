@@ -1,13 +1,13 @@
-import React from 'react';
+import React from 'react'
 
-import { render } from '../../../tests/utils';
-import '../../matchMedia.mock';
-import { Nav } from '../../../components/Nav';
+import { render } from '../../../tests/utils'
+import '../../matchMedia.mock'
+import { Nav } from '../../../components/Nav'
 
 describe('Nav', () => {
   it('loads', async () => {
     expect(async () => {
-      await render(<Nav />);
-    }).not.toThrowError();
-  });
-});
+      await render(<Nav />)
+    }).not.toThrowError()
+  })
+})

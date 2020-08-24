@@ -1,4 +1,4 @@
-import chakraTheme from '@chakra-ui/theme';
+import chakraTheme from '@chakra-ui/theme'
 
 const theme = {
   ...chakraTheme,
@@ -172,6 +172,6 @@ const theme = {
       // insert any necessary global styles here
     },
   },
-};
+}
 
-export default theme;
+export default theme

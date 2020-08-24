@@ -1,8 +1,8 @@
-import React from 'react';
-import dynamic from 'next/dynamic';
+import React from 'react'
+import dynamic from 'next/dynamic'
 
-import { AllProviders } from '../components/AllProviders';
-import { useAuth } from '../context/auth';
+import { AllProviders } from '../components/AllProviders'
+import { useAuth } from '../context/auth'
 
 /**
  * Dynamically load layouts. This codesplits and prevents code from the logged in layout from being
@@ -10,23 +10,23 @@ import { useAuth } from '../context/auth';
  */
 const LoggedInLayout = dynamic(() =>
   import('../layouts/LoggedIn').then((mod) => mod.LoggedInLayout)
-);
+)
 
 const LoggedOutLayout = dynamic(() =>
   import('../layouts/LoggedOut').then((mod) => mod.LoggedOutLayout)
-);
+)
 
 /**
  * Renders a layout depending on the result of the useAuth hook
  */
 function AppWithAuth({ children }) {
-  const { user } = useAuth();
+  const { user } = useAuth()
 
   return user ? (
     <LoggedInLayout>{children}</LoggedInLayout>
   ) : (
     <LoggedOutLayout>{children}</LoggedOutLayout>
-  );
+  )
 }
 
 function App({ pageProps, Component }) {
@@ -36,7 +36,7 @@ function App({ pageProps, Component }) {
         <Component {...pageProps} />
       </AppWithAuth>
     </AllProviders>
-  );
+  )
 }
 
-export default App;
+export default App
