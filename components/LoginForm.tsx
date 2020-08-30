@@ -46,6 +46,7 @@ export function LoginForm() {
       setIsLoading(true)
       const { data } = await login({ variables: formData })
       await loginUser(data.login.token)
+      console.warn(formData)
       await router.replace('/')
     } catch (e) {
       setErrorsFromGraphQLErrors(setError, e.graphQLErrors)

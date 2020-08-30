@@ -5,7 +5,7 @@ import { Role, User } from '@prisma/client'
  * @param user The user to check the role for
  */
 export const isAdmin = (user: Partial<User>): boolean => {
-  return user?.roles.includes(Role.ADMIN)
+  return user?.role === Role.ADMIN
 }
 
 /**

@@ -1,23 +1,23 @@
-import React from 'react'
-import gql from 'graphql-tag'
 import {
-  Spinner,
-  Text,
-  Stack,
-  Box,
-  Heading,
-  Button,
-  AspectRatio,
-  Flex,
-  Grid,
   Alert,
   AlertIcon,
+  AspectRatio,
+  Box,
+  Button,
+  Flex,
+  Grid,
+  Heading,
   Link,
+  Spinner,
+  Stack,
+  Text,
 } from '@chakra-ui/core'
+import gql from 'graphql-tag'
 import NextLink from 'next/link'
+import React from 'react'
 
-import { GetPetsQuery, Pet, useGetPetsQuery, useAdoptPetMutation } from '../types'
 import { useAuth } from '../context/auth'
+import { GetPetsQuery, useAdoptPetMutation, useGetPetsQuery } from '../types'
 
 gql`
   query getPets {
@@ -26,8 +26,10 @@ gql`
       name
       createdAt
       updatedAt
-      user {
-        id
+      adoption {
+        adopter {
+          id
+        }
       }
     }
   }
@@ -35,7 +37,10 @@ gql`
   mutation adoptPet($pet: PetWhereUniqueInput!) {
     adoptPet(pet: $pet) {
       id
-      user {
+      adoptee {
+        id
+      }
+      adopter {
         id
       }
     }
@@ -62,10 +67,13 @@ const PetCard = ({ pet }: { pet: GetPetsQuery['pets'][0] }) => {
 
             {user && (
               <Button
-                isDisabled={user.id === pet.user?.id}
+                isDisabled={user.id === pet.adoption?.adopter.id}
                 onClick={(e) => {
                   e.stopPropagation()
+                  e.preventDefault()
                   adopt({ variables: { pet: { id: pet.id } } })
+
+                  return false
                 }}
               >
                 adopt
@@ -97,7 +105,7 @@ export const Success = ({ pets }: GetPetsQuery) => {
 
 export const TestCell = () => {
   const { data, loading, error } = useGetPetsQuery()
-
+  console.warn({ error })
   if (loading) return <Loading />
   if (error) return <Error />
   if (data.pets) return <Success {...data} />

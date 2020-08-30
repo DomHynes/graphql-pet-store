@@ -10,9 +10,15 @@ export const QUERY = gql`
       id
       createdAt
       name
-      user {
+      adoption {
         id
-        email
+        adopter {
+          id
+          email
+          profile {
+            fullName
+          }
+        }
       }
     }
   }
@@ -26,7 +32,7 @@ export const Success = ({ pets }: PetDetailQuery) => {
   return (
     <Stack spacing={2}>
       <Heading>{pets[0].name || 'Unnamed'}</Heading>
-      <Text>{pets[0].user?.email}</Text>
+      <Text>{pets[0]?.adoption?.adopter.profile.fullName}</Text>
     </Stack>
   )
 }

@@ -25,9 +25,7 @@ export function Nav() {
     </Menu>
   ) : (
     <Stack as="nav" direction="row" ml="auto" alignItems="center" fontSize="md" spacing={8}>
-      <Link next={{ href: '/profile' }} variant="outline">
-        Profile
-      </Link>
+      <Link next={{ href: '/profile' }}>Profile</Link>
     </Stack>
   )
 }

@@ -1,0 +1,29 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "adoptions",
+      "type": "Adoption",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "User",
+      "field": "Adoption"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Pet",
+      "field": "adoptions",
+      "type": "Adoption",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Pet",
+      "field": "adoption"
+    }
+  ]
+}

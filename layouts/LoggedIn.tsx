@@ -1,8 +1,7 @@
-import React from 'react'
 import { Button, Center, Container, Flex, Text } from '@chakra-ui/core'
 import { useRouter } from 'next/router'
+import React from 'react'
 
-import Link from '../components/Link'
 import { Logo } from '../components/Logo'
 import { Nav } from '../components/Nav'
 import { useAuth } from '../context/auth'

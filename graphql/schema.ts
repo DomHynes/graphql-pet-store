@@ -1,12 +1,12 @@
-import { settings, use, schema } from 'nexus'
+import { settings, use } from 'nexus'
 import { prisma } from 'nexus-plugin-prisma'
-import { connectionPlugin } from 'nexus/components/schema'
 
 import { prisma as instance } from '../lib/prisma'
 import './context'
 import './pet'
 import './user'
 import './profile'
+import './adoption.ts'
 
 export const GRAPHQL_PATH = '/api/graphql'
 
@@ -19,6 +19,6 @@ settings.change({
   server: {
     playground: process.env.NODE_ENV !== 'production',
     path: '/api/graphql',
-    cors: false,
+    // cors: false,
   },
 })

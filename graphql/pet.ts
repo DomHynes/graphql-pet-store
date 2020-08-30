@@ -11,7 +11,7 @@ schema.objectType({
     t.model.createdAt()
     t.model.updatedAt()
     t.model.name()
-    t.model.user()
+    t.model.adoption()
   },
 })
 
@@ -23,17 +23,6 @@ schema.extendType({
       resolve: (_root, args, ctx) => {
         return ctx.db.pet.create({ data: {} })
       },
-    })
-
-    t.field('adoptPet', {
-      type: 'Pet',
-      args: { pet: schema.arg({ type: 'PetWhereUniqueInput', required: true }) },
-      resolve: async (_root, args, ctx) =>
-        ctx.db.pet.update({
-          where: args.pet,
-          include: { user: true },
-          data: { user: { connect: { id: ctx.user.id } } },
-        }),
     })
   },
 })

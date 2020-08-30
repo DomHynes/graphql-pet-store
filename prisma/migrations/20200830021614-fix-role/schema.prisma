@@ -3,7 +3,7 @@
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 generator client {
@@ -28,15 +28,15 @@ model User {
   profile   Profile?
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
-  adoptions Adoption[]
+  Adoption  Adoption[]
 }
 
 model Pet {
-  id        String    @id @default(cuid())
+  id        String     @id @default(cuid())
   name      String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  adoption  Adoption?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  adoption  Adoption[]
 }
 
 model Adoption {

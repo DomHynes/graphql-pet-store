@@ -2,6 +2,49 @@
 ### Do not make changes to this file directly
 
 
+type Adoption {
+  adoptee: Pet!
+  adopter: User!
+  createdAt: DateTime!
+  id: String!
+  updatedAt: DateTime!
+}
+
+input AdoptionCreateManyWithoutAdopterInput {
+  connect: [AdoptionWhereUniqueInput!]
+  create: [AdoptionCreateWithoutAdopterInput!]
+}
+
+input AdoptionCreateWithoutAdopterInput {
+  adoptee: PetCreateOneWithoutAdoptionInput!
+  createdAt: DateTime
+  id: String
+  updatedAt: DateTime
+}
+
+input AdoptionListRelationFilter {
+  every: AdoptionWhereInput
+  none: AdoptionWhereInput
+  some: AdoptionWhereInput
+}
+
+input AdoptionWhereInput {
+  adoptee: PetWhereInput
+  adopter: UserWhereInput
+  AND: [AdoptionWhereInput!]
+  createdAt: DateTimeFilter
+  id: StringFilter
+  NOT: [AdoptionWhereInput!]
+  OR: [AdoptionWhereInput!]
+  petId: StringFilter
+  updatedAt: DateTimeFilter
+  userId: StringFilter
+}
+
+input AdoptionWhereUniqueInput {
+  id: String
+}
+
 """Payload returned if login or signup is successful"""
 type AuthPayload {
   """The current JWT token. Use in Authentication header"""
@@ -35,7 +78,7 @@ The `JSON` scalar type represents JSON objects as specified by [ECMA-404](http:/
 scalar Json
 
 type Mutation {
-  adoptPet(pet: PetWhereUniqueInput!): Pet
+  adoptPet(pet: PetWhereUniqueInput!): Adoption
   createPet: Pet
   createUser(data: UserCreateInput!): User!
 
@@ -87,29 +130,23 @@ input NestedStringNullableFilter {
 
 """A Pet"""
 type Pet {
+  adoption: Adoption
   createdAt: DateTime!
   id: String!
   name: String
   updatedAt: DateTime!
-  user: User
 }
 
-input PetCreateManyWithoutUserInput {
-  connect: [PetWhereUniqueInput!]
-  create: [PetCreateWithoutUserInput!]
+input PetCreateOneWithoutAdoptionInput {
+  connect: PetWhereUniqueInput
+  create: PetCreateWithoutAdoptionInput
 }
 
-input PetCreateWithoutUserInput {
+input PetCreateWithoutAdoptionInput {
   createdAt: DateTime
   id: String
   name: String
   updatedAt: DateTime
-}
-
-input PetListRelationFilter {
-  every: PetWhereInput
-  none: PetWhereInput
-  some: PetWhereInput
 }
 
 input PetOrderByInput {
@@ -117,10 +154,10 @@ input PetOrderByInput {
   id: SortOrder
   name: SortOrder
   updatedAt: SortOrder
-  userId: SortOrder
 }
 
 input PetWhereInput {
+  adoption: AdoptionWhereInput
   AND: [PetWhereInput!]
   createdAt: DateTimeFilter
   id: StringFilter
@@ -128,8 +165,6 @@ input PetWhereInput {
   NOT: [PetWhereInput!]
   OR: [PetWhereInput!]
   updatedAt: DateTimeFilter
-  user: UserWhereInput
-  userId: StringNullableFilter
 }
 
 input PetWhereUniqueInput {
@@ -232,28 +267,24 @@ input StringNullableFilter {
 
 """A User"""
 type User {
+  adoptions(after: AdoptionWhereUniqueInput, before: AdoptionWhereUniqueInput, first: Int, last: Int): [Adoption!]!
   createdAt: DateTime!
   email: String
   id: String!
-  pets(after: PetWhereUniqueInput, before: PetWhereUniqueInput, first: Int, last: Int): [Pet!]!
   profile: Profile
-  roles: [Role!]!
+  role: Role!
   updatedAt: DateTime!
 }
 
 input UserCreateInput {
+  adoptions: AdoptionCreateManyWithoutAdopterInput
   createdAt: DateTime
   email: String!
   id: String
   password: String!
-  pets: PetCreateManyWithoutUserInput
   profile: ProfileCreateOneWithoutUserInput
-  roles: UserCreaterolesInput
+  role: Role
   updatedAt: DateTime
-}
-
-input UserCreaterolesInput {
-  set: [Role!]
 }
 
 input UserOrderByInput {
@@ -261,11 +292,12 @@ input UserOrderByInput {
   email: SortOrder
   id: SortOrder
   password: SortOrder
-  roles: SortOrder
+  role: SortOrder
   updatedAt: SortOrder
 }
 
 input UserWhereInput {
+  adoptions: AdoptionListRelationFilter
   AND: [UserWhereInput!]
   createdAt: DateTimeFilter
   email: StringFilter
@@ -273,9 +305,8 @@ input UserWhereInput {
   NOT: [UserWhereInput!]
   OR: [UserWhereInput!]
   password: StringFilter
-  pets: PetListRelationFilter
   profile: ProfileWhereInput
-  roles: [Role!]
+  role: Role
   updatedAt: DateTimeFilter
 }
 

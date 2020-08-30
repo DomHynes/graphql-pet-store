@@ -1,7 +1,7 @@
-import React from 'react'
+import { Center, Flex } from '@chakra-ui/core'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { Heading, Center, Flex } from '@chakra-ui/core'
+import React from 'react'
 
 import { PetDetailCell } from '../cells/PetDetail'
 

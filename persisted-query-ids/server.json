@@ -1,0 +1,8 @@
+{
+   "898798c8cb290b2821ce0f7e93fea2153c9e3114af6edc4787d292e34159fd2e": "query PetDetail($id: String!) {\n  pets(where: {id: {equals: $id}}) {\n    id\n    createdAt\n    name\n    adoption {\n      id\n      adopter {\n        id\n        email\n        profile {\n          fullName\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}",
+   "ffb74998622e9acd9f24fb9362ec50e9ae6135909c84fa8c48e17b3cb5dcea4d": "query getPets {\n  pets(orderBy: {createdAt: asc}) {\n    id\n    name\n    createdAt\n    updatedAt\n    adoption {\n      adopter {\n        id\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}",
+   "cc485ebafd250a1e2ac73c7a5fb3331e63454c5cbb1a70cdc61ba783b142ac78": "mutation adoptPet($pet: PetWhereUniqueInput!) {\n  adoptPet(pet: $pet) {\n    id\n    adoptee {\n      id\n      __typename\n    }\n    adopter {\n      id\n      __typename\n    }\n    __typename\n  }\n}",
+   "f3f503048cac770f3caa4b8ea7b40f3ff6d28acdd54100986f59961b6ce7723a": "mutation login($email: String!, $password: String!) {\n  login(email: $email, password: $password) {\n    token\n    __typename\n  }\n}",
+   "0e2ca39120c6e451fd62c60f60bf1fd3f03b7e7d396b45f23fe71b3e3f9f7760": "mutation signup($data: SignupInput!) {\n  signup(data: $data) {\n    token\n    user {\n      id\n      __typename\n    }\n    __typename\n  }\n}",
+   "e687e5f166df2bec947bf16ee539b0d3dfc565b461c39cb6582e25fc4344bb35": "query me {\n  me {\n    id\n    email\n    __typename\n  }\n}"
+}

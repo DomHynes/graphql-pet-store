@@ -12,11 +12,11 @@ schema.objectType({
   definition(t) {
     t.model.id()
     t.model.email()
-    t.model.roles()
+    t.model.role()
     t.model.createdAt()
     t.model.updatedAt()
     t.model.profile()
-    t.model.pets()
+    t.model.adoptions()
 
     // Show email as null for unauthorized users
     t.string('email', {
@@ -147,7 +147,7 @@ schema.mutationType({
         const updatedArgs = {
           data: {
             ...args.data,
-            roles: { set: [Role.USER] },
+            role: Role.USER,
             password: hashPassword(args.data.password),
           },
         }

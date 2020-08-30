@@ -1,9 +1,13 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-restricted-globals */
-import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
+import { ApolloClient, InMemoryCache, createHttpLink, from } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
+import { createPersistedQueryLink } from '@apollo/link-persisted-queries'
 import fetch from 'cross-fetch'
+import { usePregeneratedHashes } from 'graphql-codegen-persisted-query-ids/lib/apollo'
 
 import { LOGIN_TOKEN_KEY } from '../constants'
+import hashes from '../persisted-query-ids/client.json'
 
 import { cookies } from './cookies'
 
@@ -43,7 +47,11 @@ export function createApolloClient(ctx?: Record<string, any>) {
   })
 
   const client = new ApolloClient({
-    link: authLink.concat(httpLink),
+    link: from([
+      createPersistedQueryLink({ generateHash: usePregeneratedHashes(hashes) }),
+      authLink,
+      httpLink,
+    ]),
     cache: new InMemoryCache(),
   })
 
